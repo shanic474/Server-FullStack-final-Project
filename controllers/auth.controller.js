@@ -21,6 +21,29 @@ export default {
       res.status(401).json({ message: "Invalid token" });
     }
   },
+  verifyAdminToken: (req, res, next) => {
+  try {
+    const token = req.cookies?.token;
+    console.log("Verifying token:", token);
+
+    if (!token) return res.status(401).json({ message: "No token provided" });
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(decoded);
+    
+    if (!decoded) return res.status(401).json({ message: "Invalid token" });
+
+    if (!["admin", "manager"].includes(decoded.role)) {
+      return res.status(403).json({ message: "Forbidden: Admins only" });
+    }
+
+    req.user = decoded;
+    next();
+  } catch (error) {
+    console.log(error);
+    res.status(401).json({ message: "Unauthorized", error: error.message });
+  }
+},
   createUser: async (req, res) => {
     try {
       console.log(req.body);

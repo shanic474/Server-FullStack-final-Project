@@ -1,7 +1,9 @@
 import express from "express";
 import productController from "../controllers/product.controller.js";
+import authController from "../controllers/auth.controller.js"
 
 const { getAllProducts, createProduct, deleteProduct, updateProduct } = productController;
+const { verifyAdminToken  } = authController;
 
 const router = express.Router();
 
@@ -9,7 +11,7 @@ const router = express.Router();
 router.get("/", getAllProducts);
 router.post("/createProduct", createProduct);
 router.delete("/deleteProduct/:id", deleteProduct);
-router.patch("/updateProduct/:id", updateProduct);
+router.patch("/updateProduct/:id",verifyAdminToken, updateProduct);
 
 
 export default router;

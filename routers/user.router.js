@@ -2,7 +2,7 @@ import express from "express";
 import userController from "../controllers/user.controller.js";
 import authController from "../controllers/auth.controller.js";
 const { getAllUsers, deleteUser, updateUser } = userController;
-const { verifyCookieToken } = authController;
+const { verifyCookieToken,verifyAdminToken  } = authController;
 
 const router = express.Router();
 
@@ -11,6 +11,7 @@ router.get("/", getAllUsers);
 // router.get("/getUser", getUser);
 router.delete("/deleteuser/:id", deleteUser);
 router.patch("/updateuser/:id",verifyCookieToken , updateUser);
+router.patch("/adminupdateuser/:id" ,verifyAdminToken, updateUser);
 
 
 
