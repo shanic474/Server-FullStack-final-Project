@@ -10,7 +10,7 @@ const router = express.Router();
 // Sample product data  
 router.get("/", getAllProducts);
 router.post("/createProduct", createProduct);
-router.delete("/deleteProduct/:id", deleteProduct);
+router.delete("/deleteProduct/:id",verifyAdminToken, deleteProduct);
 router.patch("/updateProduct/:id",verifyAdminToken, updateProduct);
 
 
