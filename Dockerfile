@@ -1,14 +1,18 @@
-FROM node:20-alpine
+# Use Node.js LTS
+FROM node:18
 
+# Set working directory
 WORKDIR /app
 
+# Copy package.json and install dependencies
 COPY package*.json ./
-RUN npm config set fetch-retry-mintimeout 20000 \
- && npm config set fetch-retry-maxtimeout 120000 \
- && npm config set network-timeout 600000 \
- && npm install
+RUN npm install
 
+# Copy the rest of the source code
 COPY . .
 
+# Expose the server port
 EXPOSE 3000
-CMD ["node", "app.js"]
+
+# Start the server
+CMD ["npm", "start"]
