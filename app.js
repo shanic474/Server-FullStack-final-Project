@@ -9,6 +9,7 @@ import cookieParser from "cookie-parser";
 import productRouter from "./routers/product.router.js";
 import userRouter from "./routers/user.router.js";
 import authRouter from "./routers/auth.router.js";
+import orderRouter from "./routers/order.router.js";
 
 
 
@@ -34,6 +35,8 @@ app.use(cookieParser());
 app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/orders", orderRouter);
+
 
 
 // make the app listen on port 3000
