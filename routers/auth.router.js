@@ -12,4 +12,6 @@ router.post("/signup", createUser);
 router.post("/userlogin", verifyCookieToken, authlogin, tokenCreation);
 router.post("/dashboardlogin", authlogin, adminAuth, tokenCreation);
 router.get("/verify-token", verifyCookieToken, adminAuth,getUser);
+router.get("/client-verify-token", verifyCookieToken, getUser);
+
 export default router;
