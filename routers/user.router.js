@@ -8,7 +8,6 @@ const router = express.Router();
 
 // user CRUD routes
 router.get("/", getAllUsers);
-// router.get("/getUser", getUser);
 router.delete("/deleteuser/:id",verifyAdminToken, deleteUser);
 router.patch("/updateuser/:id",verifyCookieToken , updateUser);
 router.patch("/adminupdateuser/:id" ,verifyAdminToken, updateUser);

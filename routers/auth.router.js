@@ -8,7 +8,7 @@ const { getUser } = userController;
 
 const router = express.Router();
 
-router.post("/signup", createUser);
+router.post("/signup", createUser, tokenCreation);
 router.post("/userlogin", verifyCookieToken, authlogin, tokenCreation);
 router.post("/dashboardlogin", authlogin, adminAuth, tokenCreation);
 router.get("/verify-token", verifyCookieToken, adminAuth,getUser);

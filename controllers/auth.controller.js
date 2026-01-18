@@ -44,7 +44,7 @@ export default {
     res.status(401).json({ message: "Unauthorized", error: error.message });
   }
 },
-  createUser: async (req, res) => {
+  createUser: async (req, res, next) => {
     try {
       console.log(req.body);
       const { user_name, user_email, password, phone_number, user_role } =
@@ -64,7 +64,10 @@ export default {
 
       // Create new user
       const user = await userModel.create(req.body);
-      res.status(200).json({ message: "User signed up successfully" });
+      console.log("User created successfully:", user);
+      req.user = user; 
+      next(); // proceed to tokenCreation middleware
+
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Internal server error" });
@@ -139,6 +142,8 @@ export default {
 
       // 3️⃣ Generate JWT token and set cookie
       const token = jwt.sign(payload, process.env.JWT_SECRET);
+      console.log("token generated successfully");
+      
 
       // Set token in HTTP-only cookie for 1 day
       res.cookie("token", token, {
