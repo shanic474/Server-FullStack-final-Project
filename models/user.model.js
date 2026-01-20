@@ -6,10 +6,11 @@ const userSchema = new mongoose.Schema({
     user_email: {
       type: String,required: true,unique: true,trim: true},
     password: { type: String, required: true },
-
-    // Optional fields
     phone_number: { type: String , default: "" },
     user_role: { type: String, enum: ["user", "admin", "manager"], default: "user" },
+    age: { type: Number, default: null },
+    height_cm: { type: Number, default: null },
+    weight_kg: { type: Number, default: null }
   },
 
 );

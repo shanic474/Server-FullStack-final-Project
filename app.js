@@ -10,6 +10,7 @@ import productRouter from "./routers/product.router.js";
 import userRouter from "./routers/user.router.js";
 import authRouter from "./routers/auth.router.js";
 import orderRouter from "./routers/order.router.js";
+import categoryRouter from "./routers/category.router.js";
 
 
 
@@ -36,6 +37,7 @@ app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/orders", orderRouter);
+app.use("/api/categories", categoryRouter);
 
 
 

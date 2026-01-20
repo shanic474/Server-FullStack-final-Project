@@ -3,12 +3,30 @@ import ProductModel from "../models/product.model.js";
 export default {
   getAllProducts: async (req, res) => {
     try {
-      const products = await ProductModel.find({});
+      const { page = 1, limit = 6, filter = {}, sort = {} } = req.query;
+      console.log(sort);
+      const filterObject =
+        typeof filter === "string" ? JSON.parse(filter) : filter;
+      const sortObject = typeof sort === "string" ? JSON.parse(sort) : sort;
+      console.log(sortObject);
+
+      const skip = (page - 1) * limit;
+      const total = await ProductModel.countDocuments(filterObject);
+
+      const products = await ProductModel.find(filterObject)
+        .sort(sortObject)
+        .skip(skip)
+        .limit(limit)
+        .populate("product_category");
+
       console.log("Products from DB:", products);
 
       res.status(200).json({
         message: "Products fetched successfully",
         products,
+        total,
+        page,
+        limit,
       });
     } catch (error) {
       console.log(error);
@@ -78,7 +96,7 @@ export default {
       const updatedProduct = await ProductModel.findByIdAndUpdate(
         id,
         updateData,
-        { new: true }
+        { new: true },
       );
       if (!updatedProduct) {
         return res.status(404).json({ message: "Product not found" });
