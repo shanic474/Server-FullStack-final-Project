@@ -5,12 +5,13 @@ const userSchema = new mongoose.Schema({
     user_name: { type: String, required: true },
     user_email: {
       type: String,required: true,unique: true,trim: true},
-    password: { type: String, required: true },
+    password: { type: String },
     phone_number: { type: String , default: "" },
     user_role: { type: String, enum: ["user", "admin", "manager"], default: "user" },
     age: { type: Number, default: null },
     height_cm: { type: Number, default: null },
-    weight_kg: { type: Number, default: null }
+    weight_kg: { type: Number, default: null },
+    google_id: { type: String, unique: true, spares: true, default: null },
   },
 
 );
