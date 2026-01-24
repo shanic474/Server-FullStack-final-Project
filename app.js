@@ -11,6 +11,10 @@ import userRouter from "./routers/user.router.js";
 import authRouter from "./routers/auth.router.js";
 import orderRouter from "./routers/order.router.js";
 import categoryRouter from "./routers/category.router.js";
+import "./models/category.model.js";
+import "./models/product.model.js";
+
+
 
 
 

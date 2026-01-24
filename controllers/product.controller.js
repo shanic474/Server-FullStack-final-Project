@@ -1,12 +1,25 @@
 import ProductModel from "../models/product.model.js";
+import "../models/category.model.js"; 
+
 
 export default {
   getAllProducts: async (req, res) => {
     try {
-      const { page = 1, limit = 6, filter = {}, sort = {} } = req.query;
+      const { page = 1, limit = 4, filter = {}, sort = {} } = req.query;
       console.log(sort);
-      const filterObject =
-        typeof filter === "string" ? JSON.parse(filter) : filter;
+      let filterObject = {};
+      if (filter) {
+        if (typeof filter === "string") {
+          try {
+            filterObject = JSON.parse(filter);
+          } catch {
+            filterObject.product_category = filter;
+          }
+        } else {
+          filterObject = filter; // object from frontend
+        }
+      }
+
       const sortObject = typeof sort === "string" ? JSON.parse(sort) : sort;
       console.log(sortObject);
 
@@ -14,11 +27,11 @@ export default {
       const total = await ProductModel.countDocuments(filterObject);
 
       const products = await ProductModel.find(filterObject)
-        .sort(sortObject)
-        .skip(skip)
-        .limit(limit)
-        .populate("product_category");
-
+      .sort(sortObject)
+      .skip(skip)
+      .limit(limit)
+      // .populate("product_category");
+      
       console.log("Products from DB:", products);
 
       res.status(200).json({
@@ -45,16 +58,35 @@ export default {
         product_description,
         product_image,
         stock,
+        calories,
+        carbs,
+        protein,
+        fat,
+        minerals,
+        vitamins,
+        micronutrients,
       } = req.body;
+
+      // Convert numeric fields explicitly to Number
       const newProduct = new ProductModel({
         product_name,
-        product_price,
+        product_price: Number(product_price),
         product_category,
         product_description,
         product_image,
-        stock,
+        stock: Number(stock),
+        calories: Number(calories),
+        carbs: Number(carbs),
+        protein: Number(protein),
+        fat: Number(fat),
+        minerals: Number(minerals),
+        vitamins: Number(vitamins),
+        micronutrients: Number(micronutrients),
       });
+      console.log("Incoming category:", product_category);
+
       await newProduct.save();
+
       res.status(201).json({
         message: "Product created successfully",
         product: newProduct,
@@ -67,6 +99,7 @@ export default {
       });
     }
   },
+
   deleteProduct: async (req, res) => {
     try {
       const { id } = req.params;
