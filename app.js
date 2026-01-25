@@ -47,6 +47,5 @@ app.use("/api/categories", categoryRouter);
 
 // make the app listen on port 3000
 app.listen(PORT, () => {
-  console.log(`server is running on  ${SERVER_URL}`);
-  console.log(`http://localhost:${PORT}`);
+  console.log(`server is running on  ${process.env.SERVER_URL}`);
 });
