@@ -28,7 +28,7 @@ connectDb();
 
 // middleware
 app.use(cors({
-    origin: ['http://localhost:5173'],
+    origin: ['https://client-qvfo.onrender.com','https://dashboard-kkbp.onrender.com'],
     credentials: true,
 }));
 app.use(morgan('dev'));
@@ -47,6 +47,6 @@ app.use("/api/categories", categoryRouter);
 
 // make the app listen on port 3000
 app.listen(PORT, () => {
-  console.log(`server is running on port ${PORT}`);
+  console.log(`server is running on  ${SERVER_URL}`);
   console.log(`http://localhost:${PORT}`);
 });
