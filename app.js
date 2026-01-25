@@ -28,7 +28,7 @@ connectDb();
 
 // middleware
 app.use(cors({
-    origin: ['https://client-qvfo.onrender.com','https://dashboard-kkbp.onrender.com'],
+    origin: ['https://client-qvfo.onrender.com','https://dashboard-kkbp.onrender.com', 'http://localhost:5173', 'http://localhost:5174'],
     credentials: true,
 }));
 app.use(morgan('dev'));
